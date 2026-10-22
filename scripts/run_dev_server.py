@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run the Rivet web UI + API locally.
+"""Run the Gavà web UI + API locally.
 
 Usage: python scripts/run_dev_server.py [--port 5000]
 """
@@ -16,7 +16,7 @@ _root = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(_root / "packages" / "engine"))
 sys.path.insert(0, str(_root / "apps" / "api"))
 
-from rivet.api.app import create_app
+from gava.api.app import create_app
 
 
 def main() -> None:

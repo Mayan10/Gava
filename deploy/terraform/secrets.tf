@@ -14,7 +14,7 @@ resource "random_password" "app_secret_key" {
 }
 
 resource "aws_secretsmanager_secret" "database_url" {
-  name = "rivet/${var.environment}/database-url"
+  name = "gava/${var.environment}/database-url"
 }
 
 resource "aws_secretsmanager_secret_version" "database_url" {
@@ -23,7 +23,7 @@ resource "aws_secretsmanager_secret_version" "database_url" {
 }
 
 resource "aws_secretsmanager_secret" "app_secret_key" {
-  name = "rivet/${var.environment}/secret-key"
+  name = "gava/${var.environment}/secret-key"
 }
 
 resource "aws_secretsmanager_secret_version" "app_secret_key" {
@@ -32,7 +32,7 @@ resource "aws_secretsmanager_secret_version" "app_secret_key" {
 }
 
 resource "aws_secretsmanager_secret" "stripe_secret_key" {
-  name = "rivet/${var.environment}/stripe-secret-key"
+  name = "gava/${var.environment}/stripe-secret-key"
 }
 
 resource "aws_secretsmanager_secret_version" "stripe_secret_key" {
@@ -42,7 +42,7 @@ resource "aws_secretsmanager_secret_version" "stripe_secret_key" {
 }
 
 resource "aws_secretsmanager_secret" "stripe_webhook_secret" {
-  name = "rivet/${var.environment}/stripe-webhook-secret"
+  name = "gava/${var.environment}/stripe-webhook-secret"
 }
 
 resource "aws_secretsmanager_secret_version" "stripe_webhook_secret" {

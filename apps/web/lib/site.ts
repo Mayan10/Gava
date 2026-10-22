@@ -8,7 +8,7 @@ function resolveSiteUrl(): string {
   if (process.env.NODE_ENV === "production") {
     // Never silently bake localhost into production SEO surfaces.
     console.warn(
-      "[rivet] NEXT_PUBLIC_SITE_URL is not set for this production build; " +
+      "[gava] NEXT_PUBLIC_SITE_URL is not set for this production build; " +
         "SEO URLs (canonical, OG, sitemap, robots, JSON-LD) will fall back to " +
         "localhost. Set NEXT_PUBLIC_SITE_URL to the public origin before deploying.",
     );

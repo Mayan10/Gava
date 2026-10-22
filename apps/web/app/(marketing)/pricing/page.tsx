@@ -7,7 +7,7 @@ import { PricingCards } from "@/components/site/pricing-cards";
 export const metadata: Metadata = {
   title: "Pricing",
   description:
-    "Simple plans for Rivet — start free, then upgrade for DXF export, more generations, and API access. Free, Pro ($29/mo), and Studio ($99/mo).",
+    "Simple plans for Gavà — start free, then upgrade for DXF export, more generations, and API access. Free, Pro ($29/mo), and Studio ($99/mo).",
   alternates: { canonical: "/pricing" },
 };
 
@@ -18,7 +18,7 @@ const FAQS = [
   },
   {
     q: "What does code-compliant actually mean?",
-    a: "Building-code minimums — setbacks, room minimums — are hard constraints. Rivet ships swappable rulesets (TNCDBR 2019 primary, NBC 2016 fallback) and will return an infeasibility result rather than a layout that violates one.",
+    a: "Building-code minimums — setbacks, room minimums — are hard constraints. Gavà ships swappable rulesets (TNCDBR 2019 primary, NBC 2016 fallback) and will return an infeasibility result rather than a layout that violates one.",
   },
   {
     q: "When do I get DXF export?",

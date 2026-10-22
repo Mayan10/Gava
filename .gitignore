@@ -42,9 +42,9 @@ env/
 .DS_Store
 Thumbs.db
 
-# Rivet
+# Gavà
 .venv/
-.rivet_outputs/
+.gava_outputs/
 output/
 *.dxf
 storage_data/

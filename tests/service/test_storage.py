@@ -1,7 +1,7 @@
 import pytest
 
-from rivet_service.storage.local import LocalStorageAdapter
-from rivet_service.storage.s3 import S3StorageAdapter
+from gava_service.storage.local import LocalStorageAdapter
+from gava_service.storage.s3 import S3StorageAdapter
 
 from .conftest import minio_is_reachable
 
@@ -29,7 +29,7 @@ def test_local_rejects_path_traversal(local_adapter):
 
 
 def test_local_presigned_url_embeds_a_verifiable_token(local_adapter):
-    from rivet_service.auth.tokens import verify_token
+    from gava_service.auth.tokens import verify_token
 
     url = local_adapter.presigned_download_url("a/b/c.dxf", expires_in=60)
     assert url.startswith("http://localhost:8000/api/v1/local-artifacts/")
@@ -38,7 +38,7 @@ def test_local_presigned_url_embeds_a_verifiable_token(local_adapter):
 
 
 def test_local_presigned_url_rejects_wrong_secret(local_adapter):
-    from rivet_service.auth.tokens import TokenError, verify_token
+    from gava_service.auth.tokens import TokenError, verify_token
 
     url = local_adapter.presigned_download_url("a/b/c.dxf", expires_in=60)
     token = url.rsplit("/", 1)[-1]
@@ -51,10 +51,10 @@ def s3_adapter():
     if not minio_is_reachable():
         pytest.skip("No MinIO reachable at localhost:9000")
     adapter = S3StorageAdapter(
-        "rivet-test-bucket",
+        "gava-test-bucket",
         endpoint_url="http://localhost:9000",
-        access_key="rivet",
-        secret_key="rivet-dev-secret",
+        access_key="gava",
+        secret_key="gava-dev-secret",
         region="us-east-1",
     )
     adapter.ensure_bucket()

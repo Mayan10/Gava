@@ -1,4 +1,4 @@
-# Runtime dependencies for Rivet. Kept intentionally small — no ML frameworks,
+# Runtime dependencies for Gavà. Kept intentionally small — no ML frameworks,
 # no system-level dependencies (Graphviz, Tesseract) — the engine is pure
 # procedural geometry + constraint scoring.
 networkx>=3.2

@@ -4,6 +4,6 @@
 # `docker-compose up` -- this is the lightweight two-process dev loop.
 procs:
   backend:
-    shell: ". .venv/bin/activate && uvicorn rivet_service.main:app --reload --port 8000"
+    shell: ". .venv/bin/activate && uvicorn gava_service.main:app --reload --port 8000"
   web:
     shell: "bun run --cwd apps/web dev"

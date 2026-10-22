@@ -9,7 +9,7 @@ from __future__ import annotations
 import uuid
 from unittest.mock import patch
 
-from rivet_service.db.models import (
+from gava_service.db.models import (
     Artifact,
     Candidate,
     Generation,
@@ -19,7 +19,7 @@ from rivet_service.db.models import (
     Subscription,
     User,
 )
-from rivet_service.db.session import SessionLocal
+from gava_service.db.session import SessionLocal
 
 from .test_generations import VALID_GENERATE_PAYLOAD, _run_worker_once
 
@@ -69,8 +69,8 @@ def test_account_deletion_sole_member_cascades_everything(client):
 
     res = client.delete("/api/v1/me")
     assert res.status_code == 200
-    assert "rivet_session" not in client.cookies
-    assert "rivet_csrf" not in client.cookies
+    assert "gava_session" not in client.cookies
+    assert "gava_csrf" not in client.cookies
 
     db = SessionLocal()
     try:
@@ -160,8 +160,8 @@ def test_account_deletion_cancels_subscription_and_deletes_stripe_customer(clien
         db.close()
 
     with (
-        patch("rivet_service.api.v1.me.cancel_subscription") as mock_cancel,
-        patch("rivet_service.api.v1.me.delete_customer") as mock_delete_customer,
+        patch("gava_service.api.v1.me.cancel_subscription") as mock_cancel,
+        patch("gava_service.api.v1.me.delete_customer") as mock_delete_customer,
     ):
         res = client.delete("/api/v1/me")
 

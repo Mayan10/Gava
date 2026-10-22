@@ -1,5 +1,5 @@
-from rivet.core.models import Layout, Opening, PlotSpec, Rect, RoomInstance, RoomType, Ruleset
-from rivet.core.validator import validate_layout
+from gava.core.models import Layout, Opening, PlotSpec, Rect, RoomInstance, RoomType, Ruleset
+from gava.core.validator import validate_layout
 
 
 def _plot(width=12.0, length=11.0):
@@ -7,7 +7,7 @@ def _plot(width=12.0, length=11.0):
 
 
 def _buildable(plot: PlotSpec, ruleset=Ruleset.TNCDBR_2019):
-    from rivet.core.rules import setbacks_for
+    from gava.core.rules import setbacks_for
 
     s = setbacks_for(plot.width_m, plot.area_sqm, ruleset=ruleset)
     return Rect(x=s.side_m, y=s.rear_m, w=plot.width_m - 2 * s.side_m, h=plot.length_m - s.front_m - s.rear_m)

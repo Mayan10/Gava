@@ -10,7 +10,7 @@ export function Logo({ className }: { className?: string }) {
         "group inline-flex items-center gap-2.5 font-display text-lg font-semibold tracking-tight",
         className,
       )}
-      aria-label="Rivet home"
+      aria-label="Gavà home"
     >
       <svg
         width="26"
@@ -34,7 +34,7 @@ export function Logo({ className }: { className?: string }) {
         <line x1="10" y1="14" x2="24.5" y2="14" className="stroke-foreground" strokeWidth="1.25" />
         <rect x="1.5" y="1.5" width="8.5" height="12.5" className="fill-clay/80" />
       </svg>
-      <span>Rivet</span>
+      <span>Gavà</span>
     </Link>
   );
 }

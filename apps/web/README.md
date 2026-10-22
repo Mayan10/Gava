@@ -1,10 +1,10 @@
-# Rivet web
+# Gavà web
 
-The Next.js front end for [Rivet](../../README.md) — currently the public
+The Next.js front end for [Gavà](../../README.md) — currently the public
 marketing surface (landing, pricing, legal) with the API client and design
 system in place for the product UI.
 
-It talks to the FastAPI service in `apps/api/rivet_service/` over HTTP and holds
+It talks to the FastAPI service in `apps/api/gava_service/` over HTTP and holds
 no engine logic of its own. Nothing here imports Python; nothing in `packages/engine` or `apps/api`
 imports from here.
 
@@ -74,7 +74,7 @@ lib/
 Stack: Next.js 16 (App Router, RSC), React 19, Tailwind v4, shadcn/ui on
 Base UI, lucide icons.
 
-`lib/plans.ts` mirrors `apps/api/rivet_service/billing/plans.py`, which is the
+`lib/plans.ts` mirrors `apps/api/gava_service/billing/plans.py`, which is the
 source of truth for what a plan actually entitles you to. The copy here
 exists so the pricing page renders without a backend round-trip — when
 tiers change, change both.

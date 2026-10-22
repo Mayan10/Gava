@@ -1,19 +1,19 @@
 resource "aws_ecs_cluster" "main" {
-  name = "rivet-${var.environment}"
+  name = "gava-${var.environment}"
 }
 
 resource "aws_cloudwatch_log_group" "api" {
-  name              = "/ecs/rivet-${var.environment}/api"
+  name              = "/ecs/gava-${var.environment}/api"
   retention_in_days = 30
 }
 
 resource "aws_cloudwatch_log_group" "worker" {
-  name              = "/ecs/rivet-${var.environment}/worker"
+  name              = "/ecs/gava-${var.environment}/worker"
   retention_in_days = 30
 }
 
 resource "aws_cloudwatch_log_group" "migrate" {
-  name              = "/ecs/rivet-${var.environment}/migrate"
+  name              = "/ecs/gava-${var.environment}/migrate"
   retention_in_days = 30
 }
 
@@ -22,7 +22,7 @@ resource "aws_cloudwatch_log_group" "migrate" {
 # `secrets` block references (that resolution happens before the
 # container starts, on ECS's behalf, not the application's).
 resource "aws_iam_role" "ecs_execution" {
-  name = "rivet-${var.environment}-ecs-execution"
+  name = "gava-${var.environment}-ecs-execution"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{
@@ -61,7 +61,7 @@ resource "aws_iam_role_policy" "ecs_execution_secrets" {
 # only S3 access to the artifacts bucket. Postgres/Redis auth is via
 # connection string, not IAM, so nothing else is needed here.
 resource "aws_iam_role" "ecs_task" {
-  name = "rivet-${var.environment}-ecs-task"
+  name = "gava-${var.environment}-ecs-task"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{
@@ -107,7 +107,7 @@ locals {
 }
 
 resource "aws_ecs_task_definition" "api" {
-  family                   = "rivet-${var.environment}-api"
+  family                   = "gava-${var.environment}-api"
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
   cpu                      = var.api_cpu
@@ -135,7 +135,7 @@ resource "aws_ecs_task_definition" "api" {
 }
 
 resource "aws_ecs_task_definition" "worker" {
-  family                   = "rivet-${var.environment}-worker"
+  family                   = "gava-${var.environment}-worker"
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
   cpu                      = var.worker_cpu
@@ -147,7 +147,7 @@ resource "aws_ecs_task_definition" "worker" {
     name        = "worker"
     image       = var.container_image
     essential   = true
-    command     = ["python", "-m", "rivet_service.jobs.worker"]
+    command     = ["python", "-m", "gava_service.jobs.worker"]
     environment = local.container_environment
     secrets     = local.container_secrets
     logConfiguration = {
@@ -166,7 +166,7 @@ resource "aws_ecs_task_definition" "worker" {
 # (scripts/release.sh runs inside this container; docs/runbook.md has
 # the exact command).
 resource "aws_ecs_task_definition" "migrate" {
-  family                   = "rivet-${var.environment}-migrate"
+  family                   = "gava-${var.environment}-migrate"
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
   cpu                      = 256
@@ -193,7 +193,7 @@ resource "aws_ecs_task_definition" "migrate" {
 }
 
 resource "aws_ecs_service" "api" {
-  name            = "rivet-${var.environment}-api"
+  name            = "gava-${var.environment}-api"
   cluster         = aws_ecs_cluster.main.id
   task_definition = aws_ecs_task_definition.api.arn
   desired_count   = var.api_desired_count
@@ -215,7 +215,7 @@ resource "aws_ecs_service" "api" {
 }
 
 resource "aws_ecs_service" "worker" {
-  name            = "rivet-${var.environment}-worker"
+  name            = "gava-${var.environment}-worker"
   cluster         = aws_ecs_cluster.main.id
   task_definition = aws_ecs_task_definition.worker.arn
   desired_count   = var.worker_desired_count

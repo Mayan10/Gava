@@ -25,8 +25,8 @@ import sys
 
 _SCRIPT = """
 import json
-from rivet.core.models import GenerationRequest, Orientation, PlotSpec, RoomRequirement, RoomType
-from rivet.core.generator import generate
+from gava.core.models import GenerationRequest, Orientation, PlotSpec, RoomRequirement, RoomType
+from gava.core.generator import generate
 
 request = GenerationRequest(
     plot=PlotSpec(

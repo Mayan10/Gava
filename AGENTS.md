@@ -1,6 +1,6 @@
-# Rivet: working rules for AI agents
+# Gavà: working rules for AI agents
 
-Rivet generates residential floor plans from a room program using a
+Gavà generates residential floor plans from a room program using a
 guillotine slicing tree searched by simulated annealing, renders them to
 PNG/SVG, and exports DXF. It is being turned into a subscription product.
 
@@ -22,8 +22,8 @@ changing, and work only in that area's folder.
 - **`frontend`** — all work under the frontend app (`apps/web`). Frontend
   contributors touch only this folder.
 - **`backend`** — all work under `packages/engine` (the pure engine library,
-  package `rivet`) and `apps/api` (the FastAPI service, package
-  `rivet_service`). Backend contributors touch only these folders.
+  package `gava`) and `apps/api` (the FastAPI service, package
+  `gava_service`). Backend contributors touch only these folders.
 - **`chore/<topic>`** — CI, infra, tooling, docs, and anything that does not
   change production behaviour. Short-lived; delete after merge.
 
@@ -35,15 +35,15 @@ branching.
 
 ## Hard boundaries
 
-1. **Layer separation is absolute.** `packages/engine/rivet/core/`,
-   `packages/engine/rivet/render/` and `packages/engine/rivet/export/` are a
+1. **Layer separation is absolute.** `packages/engine/gava/core/`,
+   `packages/engine/gava/render/` and `packages/engine/gava/export/` are a
    pure library. They must never import from
    the service layer, touch a database, read environment variables, make
    network calls, or know that users, orgs, plans, or billing exist. Do not
    thread `user_id` or `org_id` into the generator. If a feature seems to
    need it, the answer is a parameter on the request object or a check in
    the service layer before the call.
-2. **All service code lives in `apps/api/rivet_service/`.**
+2. **All service code lives in `apps/api/gava_service/`.**
 3. **Determinism is a contract.** The same `GenerationRequest` and seed must
    produce byte-identical output across separate processes. Never introduce
    `set()` iteration, dict-ordering assumptions, `hash()` of a string, or

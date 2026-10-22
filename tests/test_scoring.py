@@ -1,8 +1,8 @@
 import networkx as nx
 
-from rivet.core.graph import RoomNode
-from rivet.core.models import Orientation, PlotSpec, Rect
-from rivet.core.scoring import evaluate
+from gava.core.graph import RoomNode
+from gava.core.models import Orientation, PlotSpec, Rect
+from gava.core.scoring import evaluate
 
 PLOT = PlotSpec(width_m=10.0, length_m=10.0, entrance=Orientation.NORTH)
 BUILDABLE = Rect(x=1.0, y=1.0, w=8.0, h=8.0)
@@ -21,7 +21,7 @@ def _node(id_, room_type, area, aspect=2.2, exterior=False, ensuite_of=None):
 
 
 def test_avoided_adjacency_is_penalized_even_without_a_graph_edge():
-    from rivet.core.models import RoomType
+    from gava.core.models import RoomType
 
     kitchen = _node("kitchen_1", RoomType.KITCHEN, area=6.0)
     bathroom = _node("bathroom_1", RoomType.BATHROOM, area=3.0)
@@ -41,7 +41,7 @@ def test_avoided_adjacency_is_penalized_even_without_a_graph_edge():
 
 
 def test_required_edge_penalized_more_than_preferred_when_both_missed():
-    from rivet.core.models import RoomType
+    from gava.core.models import RoomType
 
     bedroom = _node("bedroom_1", RoomType.BEDROOM, area=10.0)
     ensuite = _node("bath_1", RoomType.BATHROOM, area=3.0, ensuite_of="bedroom_1")
@@ -69,7 +69,7 @@ def test_scoring_ranks_a_good_layout_above_a_bad_one():
     kitchen and bathroom stay apart) must outscore one that violates both,
     with every other dimension (areas, widths) held identical.
     """
-    from rivet.core.models import RoomType
+    from gava.core.models import RoomType
 
     bedroom = _node("bedroom_1", RoomType.BEDROOM, area=10.0)
     ensuite = _node("bath_1", RoomType.BATHROOM, area=3.0, ensuite_of="bedroom_1")

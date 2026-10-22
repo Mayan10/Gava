@@ -37,7 +37,7 @@ jobs:
       - name: Build and push
         env:
           REGISTRY: ${{ steps.ecr-login.outputs.registry }}
-          REPOSITORY: rivet-service
+          REPOSITORY: gava-service
           IMAGE_TAG: ${{ github.sha }}
         run: |
           docker build -t "$REGISTRY/$REPOSITORY:$IMAGE_TAG" .

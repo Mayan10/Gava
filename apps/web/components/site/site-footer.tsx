@@ -18,7 +18,7 @@ const COLUMNS: { heading: string; links: { href: string; label: string }[] }[] =
         { href: "/terms", label: "Terms" },
         { href: "/privacy", label: "Privacy" },
         {
-          href: "https://github.com/Mayan10/Rivet",
+          href: "https://github.com/Mayan10/Gava",
           label: "GitHub",
         },
       ],
@@ -60,7 +60,7 @@ export function SiteFooter() {
 
       <div className="border-t border-border/70">
         <Container className="flex flex-col items-start justify-between gap-2 py-6 text-xs text-muted-foreground sm:flex-row sm:items-center">
-          <p>© {new Date().getFullYear()} Rivet. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Gavà. All rights reserved.</p>
           <p className="font-mono tracking-wide">
             TNCDBR 2019 · NBC 2016 rulesets
           </p>

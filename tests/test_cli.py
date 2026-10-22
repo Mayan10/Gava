@@ -2,7 +2,7 @@ import json
 
 import pytest
 
-from rivet.cli import main
+from gava.cli import main
 
 
 def test_generate_writes_files_and_returns_zero(tmp_path, capsys):

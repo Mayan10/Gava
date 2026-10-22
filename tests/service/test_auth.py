@@ -1,5 +1,5 @@
-from rivet_service.auth.tokens import generate_token
-from rivet_service.config import get_settings
+from gava_service.auth.tokens import generate_token
+from gava_service.config import get_settings
 
 VALID_REGISTER = {"email": "auth-test@example.com", "password": "hunter22222", "accept_tos": True}
 
@@ -15,7 +15,7 @@ def test_register_creates_user_org_membership_and_session(client):
     assert body["user"]["email"] == VALID_REGISTER["email"]
     assert body["user"]["email_verified"] is False
     assert body["org"]["name"]
-    assert "rivet_session" in res.cookies
+    assert "gava_session" in res.cookies
 
 
 def test_register_email_is_case_insensitive_for_uniqueness(client):
@@ -45,9 +45,9 @@ def test_register_requires_accepting_tos(client):
 
 
 def test_register_records_tos_acceptance_version_and_timestamp(client):
-    from rivet_service.config import get_settings
-    from rivet_service.db.models import User
-    from rivet_service.db.session import SessionLocal
+    from gava_service.config import get_settings
+    from gava_service.db.models import User
+    from gava_service.db.session import SessionLocal
 
     res = client.post("/api/v1/auth/register", json=VALID_REGISTER)
     user_id = res.json()["user"]["id"]
@@ -68,7 +68,7 @@ def test_login_succeeds_with_correct_credentials(client):
     client.cookies.clear()
     res = client.post("/api/v1/auth/login", json=VALID_REGISTER)
     assert res.status_code == 200
-    assert "rivet_session" in res.cookies
+    assert "gava_session" in res.cookies
 
 
 def test_login_rejects_wrong_password_with_generic_message(client):

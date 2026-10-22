@@ -33,7 +33,7 @@ a legal floor plan. It only has to get *better*.
 That reduces "design a floor plan" to "find a good permutation of rooms,"
 which is a well-trodden problem — slicing-tree optimization via simulated
 annealing is a classic technique in floorplanning literature (originally
-VLSI chip layout, since applied to architectural space planning). Rivet:
+VLSI chip layout, since applied to architectural space planning). Gavà:
 
 1. Seeds several initial orderings per generation request — sorted by
    target area, a graph-guided traversal that keeps adjacency-linked rooms

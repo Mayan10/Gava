@@ -1,8 +1,8 @@
-# Rivet: the complete Claude Code prompt set
+# Gavà: the complete Claude Code prompt set
 
 ## How to use this
 
-1. Save `rivet-saas-buildout.md` to `docs/saas-buildout.md` in the repo.
+1. Save `gava-saas-buildout.md` to `docs/saas-buildout.md` in the repo.
 2. Save this file to `docs/prompts.md`.
 3. Create `CLAUDE.md` at the repo root with the content in section 1 below.
    Claude Code reads it automatically at the start of every session, so you
@@ -19,9 +19,9 @@ Do not paste phases 1 through 12 at once.
 ## 1. `CLAUDE.md` (create this file first, copy verbatim)
 
 ```markdown
-# Rivet: working rules for Claude Code
+# Gavà: working rules for Claude Code
 
-Rivet generates residential floor plans from a room program using a
+Gavà generates residential floor plans from a room program using a
 guillotine slicing tree searched by simulated annealing, renders them to
 PNG/SVG, and exports DXF. It is being turned into a subscription product.
 
@@ -33,14 +33,14 @@ PNG/SVG, and exports DXF. It is being turned into a subscription product.
 
 ## Hard boundaries
 
-1. **Layer separation is absolute.** `src/rivet/core/`, `src/rivet/render/`
-   and `src/rivet/export/` are a pure library. They must never import from
+1. **Layer separation is absolute.** `src/gava/core/`, `src/gava/render/`
+   and `src/gava/export/` are a pure library. They must never import from
    the service layer, touch a database, read environment variables, make
    network calls, or know that users, orgs, plans, or billing exist. Do not
    thread `user_id` or `org_id` into the generator. If a feature seems to
    need it, the answer is a parameter on the request object or a check in
    the service layer before the call.
-2. **All service code lives in `src/rivet_service/`.**
+2. **All service code lives in `src/gava_service/`.**
 3. **Determinism is a contract.** The same `GenerationRequest` and seed must
    produce byte-identical output across separate processes. Never introduce
    `set()` iteration, dict-ordering assumptions, `hash()` of a string, or
@@ -285,7 +285,7 @@ rejection on the uncited window-height assumption the real ratio needs.
 
 Carried forward: window/door/wall height and block-dimension constants
 remain uncited placeholders (flagged in `core/rules.py`, same treatment as
-Phase 1's door widths); Rivet still doesn't model verandah/porch area, so
+Phase 1's door widths); Gavà still doesn't model verandah/porch area, so
 plinth area is currently identical to built-up area, not a distinct
 figure.
 
@@ -418,10 +418,10 @@ case that currently fails.
 
 **Status: done (2026-08-13).** Targeted the installed ezdxf 1.4.4 API
 (stable since ~1.0/1.1 for everything this phase needed, so the
-`ezdxf>=1.1.0` pin didn't change). `src/rivet/export/dxf.py` became a
-package (`src/rivet/export/dxf/`: `core.py`, `units.py`, `layers.py`,
+`ezdxf>=1.1.0` pin didn't change). `src/gava/export/dxf.py` became a
+package (`src/gava/export/dxf/`: `core.py`, `units.py`, `layers.py`,
 `blocks.py`, `walls_geometry.py`, `dimensions.py`, `sheet.py`) — the
-public import path (`from rivet.export.dxf import export_dxf`) is
+public import path (`from gava.export.dxf import export_dxf`) is
 unchanged. All 8 items shipped:
 
 1. Millimetre coordinates (`$INSUNITS=4`); every conversion happens once,
@@ -436,7 +436,7 @@ unchanged. All 8 items shipped:
    `blocks.py::_DOOR_ORIENTATION`).
 4. Per-room dimension chains added alongside the existing overall
    width/length dimensions, rescaled for millimetres with a dedicated
-   `RIVET` dimstyle (`DIMSCALE` tied to the fixed 1:100 print scale).
+   `GAVA` dimstyle (`DIMSCALE` tied to the fixed 1:100 print scale).
 5. Masonry hatch (`ANSI31`, ezdxf's built-in pattern — no external `.pat`
    file needed) on true rectangular wall-boundary polylines (not the old
    `const_width` centerline trick), with per-layer lineweights (heaviest
@@ -630,7 +630,7 @@ Before writing code:
    differently, and wait for my answer.
 
 Constraints:
-- Do not modify src/rivet/core, src/rivet/render, or src/rivet/export.
+- Do not modify src/gava/core, src/gava/render, or src/gava/export.
 - Tests for everything new, in the same commit.
 - pytest green before you tell me you are done.
 - Do not start the next phase.
@@ -651,7 +651,7 @@ Constraints:
 **Status: done (2026-08-13).** Four decisions confirmed before writing
 code (per the template above):
 
-1. **Flask stays running as-is.** `src/rivet/api/` (Flask) and `web/` are
+1. **Flask stays running as-is.** `src/gava/api/` (Flask) and `web/` are
    untouched; the new FastAPI service grows alongside it phase by phase
    and Flask gets removed once FastAPI reaches parity (room-types, rules,
    download -- expected around Phase 8-9), not this phase. Avoids a flag
@@ -674,7 +674,7 @@ code (per the template above):
    against the installed `starlette`/FastAPI versions -- newer than
    expected, not pinned before now.
 
-Shipped: `src/rivet_service/` (`main.py` app factory, `config.py`
+Shipped: `src/gava_service/` (`main.py` app factory, `config.py`
 pydantic-settings, `db/` sync engine+session+Alembic harness, `api/`
 with a consistent error envelope and one ported endpoint,
 `POST /api/v1/generate` -- same behavior as the Flask version, just
@@ -830,7 +830,7 @@ Redis DB index (`.../15`, distinct from the dev default `.../0`, so
 `docker compose up`) and resets a fresh temp directory for local
 storage, alongside the existing Postgres table wipe. `docker-compose.yml`'s
 `worker` service now runs the real entrypoint (`python -m
-rivet_service.jobs.worker`) instead of Phase 6's placeholder, and `api`/
+gava_service.jobs.worker`) instead of Phase 6's placeholder, and `api`/
 `worker` share one `STORAGE_BACKEND=s3` (pointed at the `minio` service)
 environment block via a YAML anchor so the two can't drift. CI's
 `service-test` job gained `redis` and a `minio` (via the `bitnami/minio`
@@ -859,7 +859,7 @@ code:
 2. **Watermarking as service-layer post-processing**, not a renderer
    parameter -- `watermark.py` overlays a tiled, rotated text pattern on
    already-rendered PNG (Pillow) and SVG (regex + string-splice) bytes.
-   Keeps `src/rivet/render/` from ever learning that plans or watermarks
+   Keeps `src/gava/render/` from ever learning that plans or watermarks
    exist (CLAUDE.md's layer-separation boundary). DXF is never
    watermarked -- free tier doesn't get DXF at all, gated by
    `Entitlements.dxf_export`.
@@ -1056,7 +1056,7 @@ Shipped, roughly in section-11 order:
   nobody should need to shell-quote an array by hand), credentials
   allowed, no wildcard.
 - **CSRF** (`auth/csrf.py`): double-submit cookie. A second,
-  non-httpOnly `rivet_csrf` cookie is issued alongside the session
+  non-httpOnly `gava_csrf` cookie is issued alongside the session
   cookie at register/login; state-changing requests must echo its value
   back in an `X-CSRF-Token` header, checked with `hmac.compare_digest`.
   A no-op for GET/HEAD/OPTIONS and for API-key auth (header-based, not
@@ -1144,7 +1144,7 @@ Shipped:
 
 - **Production `Dockerfile`** (replaces Phase 6's dev-only one): real
   multi-stage build (a `build-essential` builder stage, a slim final
-  stage with only the installed package), non-root `rivet` user, one
+  stage with only the installed package), non-root `gava` user, one
   image for both entrypoints -- `docker-compose.yml`'s existing
   `command:` overrides (api vs. worker) still work unchanged, and ECS
   task definitions (`deploy/terraform/ecs.tf`) select the same way.

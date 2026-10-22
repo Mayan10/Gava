@@ -17,9 +17,9 @@ import ezdxf
 import pytest
 
 from conftest import assert_feasible
-from rivet.core.generator import generate
-from rivet.export.dxf import export_dxf, export_dxf_bytes
-from rivet.export.dxf.blocks import (
+from gava.core.generator import generate
+from gava.export.dxf import export_dxf, export_dxf_bytes
+from gava.export.dxf.blocks import (
     BLOCK_DOOR,
     BLOCK_KITCHEN_COUNTER,
     BLOCK_NORTH_ARROW,
@@ -27,8 +27,8 @@ from rivet.export.dxf.blocks import (
     BLOCK_WC,
     BLOCK_WINDOW,
 )
-from rivet.export.dxf.layers import AIA_LAYER_NAMES, LEGACY_LAYER_NAMES
-from rivet.export.dxf.sheet import BLOCK_TITLE_BLOCK, LAYOUT_NAME
+from gava.export.dxf.layers import AIA_LAYER_NAMES, LEGACY_LAYER_NAMES
+from gava.export.dxf.sheet import BLOCK_TITLE_BLOCK, LAYOUT_NAME
 
 _GOLDEN_PATH = Path(__file__).parent / "fixtures" / "dxf_golden_census.json"
 
@@ -163,7 +163,7 @@ def test_door_and_window_attributes_carry_schedule_data(sample_request, tmp_path
 
 
 def test_every_wall_boundary_polyline_is_closed(sample_request, tmp_path):
-    from rivet.export.dxf.layers import AIA_LAYER_NAMES as L
+    from gava.export.dxf.layers import AIA_LAYER_NAMES as L
 
     layout = assert_feasible(generate(sample_request))[0]
     path = tmp_path / "plan.dxf"
@@ -225,7 +225,7 @@ def test_paper_space_layout_and_locked_viewport_exist(sample_request, tmp_path):
 
 
 def test_schedules_reflect_layout_metrics(sample_request, tmp_path):
-    from rivet.core.metrics import compute_metrics
+    from gava.core.metrics import compute_metrics
 
     layout = assert_feasible(generate(sample_request))[0]
     path = tmp_path / "plan.dxf"
@@ -242,7 +242,7 @@ def test_schedules_reflect_layout_metrics(sample_request, tmp_path):
 
 
 def test_title_block_attributes_carry_provided_metadata(sample_request, tmp_path):
-    from rivet.export.dxf import TitleBlockInfo
+    from gava.export.dxf import TitleBlockInfo
 
     layout = assert_feasible(generate(sample_request))[0]
     path = tmp_path / "plan.dxf"

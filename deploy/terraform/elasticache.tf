@@ -1,11 +1,11 @@
 resource "aws_elasticache_subnet_group" "main" {
-  name       = "rivet-${var.environment}"
+  name       = "gava-${var.environment}"
   subnet_ids = aws_subnet.private[*].id
 }
 
 resource "aws_elasticache_replication_group" "main" {
-  replication_group_id = "rivet-${var.environment}"
-  description           = "Rivet job queue + rate-limit counters (RQ, Phase 8; rate_limit.py, Phase 11)"
+  replication_group_id = "gava-${var.environment}"
+  description           = "Gavà job queue + rate-limit counters (RQ, Phase 8; rate_limit.py, Phase 11)"
 
   engine         = "redis"
   engine_version = "7.1"

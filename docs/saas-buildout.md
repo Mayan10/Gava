@@ -1,4 +1,4 @@
-# Rivet: backend build-out spec
+# Gavà: backend build-out spec
 
 Drop this at `docs/saas-buildout.md` in the repo. Work through it one phase per
 Claude Code session, not all at once.
@@ -11,17 +11,17 @@ Claude Code reads `CLAUDE.md` automatically at the start of every session, so
 these constraints stick without re-pasting them.
 
 ```markdown
-# Rivet: working rules
+# Gavà: working rules
 
 ## Hard boundaries
-- `src/rivet/core/`, `src/rivet/render/`, `src/rivet/export/` are a PURE
+- `src/gava/core/`, `src/gava/render/`, `src/gava/export/` are a PURE
   library. They must never import anything from the service layer, never
   touch the database, network, filesystem (beyond the caller-supplied path),
   environment variables, or a request context. Do not thread `user_id`,
   `org_id`, or plan information into the generator. If a feature seems to
   need it, the answer is a parameter on `GenerationRequest` or a check in
   the service layer before the call, not a change to the engine.
-- All new service code lives in `src/rivet_service/`.
+- All new service code lives in `src/gava_service/`.
 - `pytest` must pass at the end of every task. Do not leave a red suite.
 - Every schema change goes through an Alembic migration. No manual DDL,
   no `create_all()` outside tests.
@@ -40,7 +40,7 @@ these constraints stick without re-pasting them.
 
 ## 1. What the engine already is, and what has to wrap it
 
-Right now Rivet is a deterministic, CPU-only, sub-second generator with a
+Right now Gavà is a deterministic, CPU-only, sub-second generator with a
 Flask endpoint, ephemeral download tokens, no database, no users, no state.
 That is a good starting point. The engine does not need to change at all.
 
@@ -78,8 +78,8 @@ and it happens before you build eight more endpoints on top of Flask.
 ## 3. Package layout
 
 ```
-src/rivet/                  # UNCHANGED. Pure engine.
-src/rivet_service/
+src/gava/                  # UNCHANGED. Pure engine.
+src/gava_service/
   main.py                   # FastAPI app factory, middleware, routers
   config.py                 # pydantic-settings, all env vars in one place
   db/
@@ -435,7 +435,7 @@ Before writing code:
    do differently, and wait for my answer.
 
 Then implement. Constraints:
-- Do not touch src/rivet/core, src/rivet/render, src/rivet/export.
+- Do not touch src/gava/core, src/gava/render, src/gava/export.
 - Tests for everything new, in the same commit.
 - pytest green before you tell me you are done.
 - Do not start Phase N+1.

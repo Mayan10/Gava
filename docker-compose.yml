@@ -8,7 +8,7 @@
 # to apply them). After the first `docker compose up`, run:
 #   docker compose run --rm api alembic upgrade head
 #   docker compose run --rm api python -c \
-#     "from rivet_service.storage import get_storage_adapter; get_storage_adapter().ensure_bucket()"
+#     "from gava_service.storage import get_storage_adapter; get_storage_adapter().ensure_bucket()"
 #   # (only needed the first time, and only if STORAGE_BACKEND=s3)
 
 # Shared by api and worker so the two never drift -- both need the same
@@ -16,27 +16,27 @@
 # Compose extension field: ignored as a service definition, usable only
 # via the &service-env YAML anchor below.
 x-service-env: &service-env
-  DATABASE_URL: postgresql+psycopg://rivet:rivet@postgres:5432/rivet
+  DATABASE_URL: postgresql+psycopg://gava:gava@postgres:5432/gava
   REDIS_URL: redis://redis:6379/0
   STORAGE_BACKEND: s3
-  S3_BUCKET: rivet-artifacts
+  S3_BUCKET: gava-artifacts
   S3_ENDPOINT_URL: http://minio:9000
-  S3_ACCESS_KEY: rivet
-  S3_SECRET_KEY: rivet-dev-secret
+  S3_ACCESS_KEY: gava
+  S3_SECRET_KEY: gava-dev-secret
 
 services:
   postgres:
     image: postgres:16-alpine
     environment:
-      POSTGRES_USER: rivet
-      POSTGRES_PASSWORD: rivet
-      POSTGRES_DB: rivet
+      POSTGRES_USER: gava
+      POSTGRES_PASSWORD: gava
+      POSTGRES_DB: gava
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U rivet"]
+      test: ["CMD-SHELL", "pg_isready -U gava"]
       interval: 5s
       timeout: 5s
       retries: 10
@@ -50,8 +50,8 @@ services:
     image: minio/minio:latest
     command: server /data --console-address ":9001"
     environment:
-      MINIO_ROOT_USER: rivet
-      MINIO_ROOT_PASSWORD: rivet-dev-secret
+      MINIO_ROOT_USER: gava
+      MINIO_ROOT_PASSWORD: gava-dev-secret
     ports:
       - "9000:9000"
       - "9001:9001"
@@ -60,7 +60,7 @@ services:
 
   api:
     build: .
-    command: ["uvicorn", "rivet_service.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+    command: ["uvicorn", "gava_service.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
     environment:
       <<: *service-env
     ports:
@@ -74,7 +74,7 @@ services:
 
   worker:
     build: .
-    command: ["python", "-m", "rivet_service.jobs.worker"]
+    command: ["python", "-m", "gava_service.jobs.worker"]
     environment:
       <<: *service-env
     volumes:

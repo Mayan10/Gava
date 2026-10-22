@@ -1,6 +1,6 @@
 import pytest
 
-from rivet.api.app import create_app
+from gava.api.app import create_app
 
 VALID_PAYLOAD = {
     # Sized to stay feasible once circulation takes its share of the

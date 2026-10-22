@@ -47,15 +47,15 @@ jobs:
         run: ruff check packages apps tests
 
       - name: Test
-        run: pytest -q --cov=rivet --cov-report=term-missing
+        run: pytest -q --cov=gava --cov-report=term-missing
 
       - name: CLI smoke test
         run: |
-          rivet generate --width 15 --length 13 \
+          gava generate --width 15 --length 13 \
             --room living_room --room master_bedroom+ensuite \
             --room bedroom:2+ensuite --room kitchen --room dining_room \
-            --room bathroom --seed 1 --out-dir /tmp/rivet-ci-out
-          test -f /tmp/rivet-ci-out/candidate-1.dxf
+            --room bathroom --seed 1 --out-dir /tmp/gava-ci-out
+          test -f /tmp/gava-ci-out/candidate-1.dxf
 
   service-test:
     runs-on: ubuntu-latest
@@ -63,13 +63,13 @@ jobs:
       postgres:
         image: postgres:16-alpine
         env:
-          POSTGRES_USER: rivet
-          POSTGRES_PASSWORD: rivet
-          POSTGRES_DB: rivet
+          POSTGRES_USER: gava
+          POSTGRES_PASSWORD: gava
+          POSTGRES_DB: gava
         ports:
           - 5432:5432
         options: >-
-          --health-cmd "pg_isready -U rivet"
+          --health-cmd "pg_isready -U gava"
           --health-interval 5s
           --health-timeout 5s
           --health-retries 10
@@ -96,8 +96,8 @@ jobs:
       minio:
         image: bitnamilegacy/minio:2025.7.23-debian-12-r5
         env:
-          MINIO_ROOT_USER: rivet
-          MINIO_ROOT_PASSWORD: rivet-dev-secret
+          MINIO_ROOT_USER: gava
+          MINIO_ROOT_PASSWORD: gava-dev-secret
         ports:
           - 9000:9000
         options: >-
@@ -106,7 +106,7 @@ jobs:
           --health-timeout 5s
           --health-retries 10
     env:
-      DATABASE_URL: postgresql+psycopg://rivet:rivet@localhost:5432/rivet
+      DATABASE_URL: postgresql+psycopg://gava:gava@localhost:5432/gava
       REDIS_URL: redis://localhost:6379/15
 
     steps:
@@ -136,4 +136,4 @@ jobs:
         run: pytest tests/service -q
 
       - name: Build image
-        run: docker build -t rivet-service:ci .
+        run: docker build -t gava-service:ci .

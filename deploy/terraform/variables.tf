@@ -22,7 +22,7 @@ variable "az_count" {
 
 variable "container_image" {
   type        = string
-  description = "Full ECR image URI:tag to deploy, e.g. 123456789012.dkr.ecr.us-east-1.amazonaws.com/rivet-service:abc1234. Produced by CI (see .github/workflows/ci.yml's \"Build image\" step -- pushing it is Phase 12's one remaining CI gap, see docs/runbook.md) or pushed by hand for a first deploy."
+  description = "Full ECR image URI:tag to deploy, e.g. 123456789012.dkr.ecr.us-east-1.amazonaws.com/gava-service:abc1234. Produced by CI (see .github/workflows/ci.yml's \"Build image\" step -- pushing it is Phase 12's one remaining CI gap, see docs/runbook.md) or pushed by hand for a first deploy."
 }
 
 variable "api_desired_count" {
