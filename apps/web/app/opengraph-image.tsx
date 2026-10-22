@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const alt = "Rivet — Generative Floor Plan Engine";
+export const alt = "Gavà — Generative Floor Plan Engine";
 
 const PAPER = "#F3EFE6";
 const INK = "#26231D";
@@ -30,7 +30,7 @@ export default function OgImage() {
           <div style={{ display: "flex", width: 40, height: 40, border: `3px solid ${INK}` }}>
             <div style={{ width: 16, height: 40, background: CLAY }} />
           </div>
-          <div style={{ fontSize: 30, fontWeight: 700, color: INK }}>Rivet</div>
+          <div style={{ fontSize: 30, fontWeight: 700, color: INK }}>Gavà</div>
         </div>
 
         <div style={{ display: "flex", flexDirection: "column" }}>

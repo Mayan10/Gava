@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Something in Rivet is broken or produces incorrect output
+about: Something in Gavà is broken or produces incorrect output
 title: ""
 labels: bug
 ---
@@ -13,7 +13,7 @@ If this is a layout-quality issue, generation is deterministic given a seed
 — please include the exact request:
 
 ```bash
-rivet generate --width ... --length ... --room ... --seed N
+gava generate --width ... --length ... --room ... --seed N
 ```
 
 or the equivalent JSON body to `POST /api/v1/generate`.
@@ -22,7 +22,7 @@ or the equivalent JSON body to `POST /api/v1/generate`.
 What you expected to happen instead.
 
 **Environment**
-- Rivet version / commit:
+- Gavà version / commit:
 - Python version:
 - OS:
 

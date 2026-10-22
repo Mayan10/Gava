@@ -5,8 +5,8 @@
 # definitions (deploy/terraform/ecs.tf) select which by overriding the
 # container's command at the orchestrator level, not by building two
 # images:
-#   api:    uvicorn rivet_service.main:app --host 0.0.0.0 --port 8000
-#   worker: python -m rivet_service.jobs.worker
+#   api:    uvicorn gava_service.main:app --host 0.0.0.0 --port 8000
+#   worker: python -m gava_service.jobs.worker
 #
 # Migrations are never run from this image's own entrypoint (booting two
 # containers at once would race to apply them) -- see scripts/release.sh
@@ -32,20 +32,20 @@ RUN pip install --no-cache-dir --prefix=/install ".[service]"
 FROM python:3.12-slim
 
 # Never run the process that's reachable from the internet as root.
-RUN useradd --create-home --uid 1000 rivet
+RUN useradd --create-home --uid 1000 gava
 WORKDIR /app
 
 COPY --from=builder /install /usr/local
-# rivet_service/rivet are already importable from the site-packages copy
+# gava_service/gava are already importable from the site-packages copy
 # above (a real, non-editable install) -- this copy exists only because
 # alembic.ini's script_location is a path relative to the container's
-# working directory (apps/api/rivet_service/db/migrations), not an
+# working directory (apps/api/gava_service/db/migrations), not an
 # importable module path. Only the service tree is needed for migrations.
 COPY apps/api ./apps/api
 COPY alembic.ini ./
 COPY scripts ./scripts
 
-USER rivet
+USER gava
 EXPOSE 8000
 
-CMD ["uvicorn", "rivet_service.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "gava_service.main:app", "--host", "0.0.0.0", "--port", "8000"]

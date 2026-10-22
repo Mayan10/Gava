@@ -23,8 +23,8 @@ const fraunces = Fraunces({
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Rivet — Generative Floor Plan Engine",
-    template: "%s · Rivet",
+    default: "Gavà — Generative Floor Plan Engine",
+    template: "%s · Gavà",
   },
   description:
     "Generate code-compliant residential floor plans from a room program, then render and export them to PNG, SVG, and DXF.",
@@ -39,14 +39,14 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: siteUrl,
-    siteName: "Rivet",
-    title: "Rivet — Generative Floor Plan Engine",
+    siteName: "Gavà",
+    title: "Gavà — Generative Floor Plan Engine",
     description:
       "Code-compliant residential floor plans from a room program. Search, validate, render, and export to DXF.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Rivet — Generative Floor Plan Engine",
+    title: "Gavà — Generative Floor Plan Engine",
     description:
       "Code-compliant residential floor plans from a room program. Search, validate, render, and export to DXF.",
   },

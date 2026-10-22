@@ -13,9 +13,9 @@ from __future__ import annotations
 
 import pytest
 
-from rivet.core.generator import generate
-from rivet.core.graph import RoomNode
-from rivet.core.models import (
+from gava.core.generator import generate
+from gava.core.graph import RoomNode
+from gava.core.models import (
     GenerationRequest,
     Orientation,
     PlotSpec,
@@ -24,8 +24,8 @@ from rivet.core.models import (
     RoomType,
     VastuOptions,
 )
-from rivet.core.scoring import evaluate
-from rivet.core.vastu import evaluate_vastu, room_zone, true_compass_zone
+from gava.core.scoring import evaluate
+from gava.core.vastu import evaluate_vastu, room_zone, true_compass_zone
 
 # ---------------------------------------------------------------------------
 # VastuOptions validation

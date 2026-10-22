@@ -25,8 +25,8 @@ from collections import deque
 import pytest
 
 from conftest import assert_feasible
-from rivet.core.generator import generate
-from rivet.core.models import (
+from gava.core.generator import generate
+from gava.core.models import (
     GenerationRequest,
     InfeasibleResult,
     Layout,
@@ -35,7 +35,7 @@ from rivet.core.models import (
     RoomRequirement,
     RoomType,
 )
-from rivet.core.validator import validate_layout
+from gava.core.validator import validate_layout
 
 _PROGRAMS = {
     "small": [

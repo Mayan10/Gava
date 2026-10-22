@@ -3,12 +3,12 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "rivet-floorplan"
+name = "gava-floorplan"
 version = "0.1.0"
 description = "A generative floor plan engine: design, render, and export architecturally-constrained floor plans to DXF."
 readme = "README.md"
 license = { text = "MIT" }
-authors = [{ name = "Rivet Contributors" }]
+authors = [{ name = "Gavà Contributors" }]
 requires-python = ">=3.10"
 classifiers = [
     "Development Status :: 4 - Beta",
@@ -40,7 +40,7 @@ dev = [
     # plain httpx now prints a deprecation warning on every import.
     "httpx2>=2.0.0",
 ]
-# The SaaS service layer (apps/api/rivet_service/) -- kept out of the base
+# The SaaS service layer (apps/api/gava_service/) -- kept out of the base
 # install so `pip install -e .` (engine + CLI) stays lightweight, per
 # README's "no heavy dependencies" claim. See docs/saas-buildout.md.
 service = [
@@ -59,15 +59,15 @@ service = [
 ]
 
 [project.scripts]
-rivet = "rivet.cli:main"
+gava = "gava.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/Mayan10/Rivet"
-Issues = "https://github.com/Mayan10/Rivet/issues"
+Homepage = "https://github.com/Mayan10/Gava"
+Issues = "https://github.com/Mayan10/Gava/issues"
 
 [tool.setuptools.packages.find]
 # Monorepo layout: the engine library lives in packages/engine, the FastAPI
-# service in apps/api. Import names stay `rivet` and `rivet_service`.
+# service in apps/api. Import names stay `gava` and `gava_service`.
 where = ["packages/engine", "apps/api"]
 
 [tool.pytest.ini_options]
@@ -76,12 +76,12 @@ testpaths = ["tests"]
 [tool.ruff]
 line-length = 100
 target-version = "py310"
-# First-party roots so import sorting classifies rivet / rivet_service
+# First-party roots so import sorting classifies gava / gava_service
 # correctly under the monorepo layout.
 src = ["packages/engine", "apps/api", "tests"]
 
 [tool.ruff.lint]
 # B008 (function call in a default argument) is a false positive for
 # FastAPI's own documented Depends()/Query()/Body() pattern -- every
-# route in apps/api/rivet_service/ uses it, per FastAPI's own docs.
+# route in apps/api/gava_service/ uses it, per FastAPI's own docs.
 ignore = ["B008"]

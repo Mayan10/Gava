@@ -18,10 +18,10 @@ Terraform state isn't managed by Terraform itself (chicken-and-egg).
 Create it once, by hand:
 
 ```bash
-aws s3 mb s3://rivet-terraform-state --region us-east-1
-aws s3api put-bucket-versioning --bucket rivet-terraform-state \
+aws s3 mb s3://gava-terraform-state --region us-east-1
+aws s3api put-bucket-versioning --bucket gava-terraform-state \
   --versioning-configuration Status=Enabled
-aws dynamodb create-table --table-name rivet-terraform-locks \
+aws dynamodb create-table --table-name gava-terraform-locks \
   --attribute-definitions AttributeName=LockID,AttributeType=S \
   --key-schema AttributeName=LockID,KeyType=HASH \
   --billing-mode PAY_PER_REQUEST
@@ -34,7 +34,7 @@ Bucket/table names must match `deploy/terraform/versions.tf`'s `backend
 
 `deploy.yml` pushes images to ECR via an assumed IAM role, not stored AWS
 access keys. Create an IAM role trusting GitHub's OIDC provider for this
-repo, scoped to `ecr:*` on the `rivet-service` repository, then set it as
+repo, scoped to `ecr:*` on the `gava-service` repository, then set it as
 the `AWS_DEPLOY_ROLE_ARN` repo secret (Settings -> Secrets and
 variables -> Actions). AWS's own guide: search "GitHub Actions OIDC AWS"
 -- the exact trust policy JSON depends on your account id and this
@@ -64,9 +64,9 @@ that's exactly what `ci.yml`'s `secret-scan` job exists to catch):
 
 ```bash
 aws secretsmanager put-secret-value \
-  --secret-id rivet/staging/stripe-secret-key --secret-string "sk_live_..."
+  --secret-id gava/staging/stripe-secret-key --secret-string "sk_live_..."
 aws secretsmanager put-secret-value \
-  --secret-id rivet/staging/stripe-webhook-secret --secret-string "whsec_..."
+  --secret-id gava/staging/stripe-webhook-secret --secret-string "whsec_..."
 ```
 
 ## Deploying a new version
@@ -100,7 +100,7 @@ aws secretsmanager put-secret-value \
    Wait for it to reach `STOPPED` with exit code 0 (`aws ecs describe-tasks`)
    before moving on.
 4. **Confirm the ECS services stabilized**: `aws ecs describe-services
-   --cluster <cluster> --services rivet-staging-api rivet-staging-worker`
+   --cluster <cluster> --services gava-staging-api gava-staging-worker`
    -- `runningCount` should equal `desiredCount` on both.
 5. **Smoke test**:
    ```bash
@@ -114,10 +114,10 @@ Task definitions are versioned automatically by ECS (each `apply` or
 deleted). To roll back:
 
 ```bash
-aws ecs update-service --cluster <cluster> --service rivet-staging-api \
-  --task-definition rivet-staging-api:<previous-revision-number>
-aws ecs update-service --cluster <cluster> --service rivet-staging-worker \
-  --task-definition rivet-staging-worker:<previous-revision-number>
+aws ecs update-service --cluster <cluster> --service gava-staging-api \
+  --task-definition gava-staging-api:<previous-revision-number>
+aws ecs update-service --cluster <cluster> --service gava-staging-worker \
+  --task-definition gava-staging-worker:<previous-revision-number>
 ```
 
 A rollback that also needs the *database* rolled back (the new migration
@@ -130,8 +130,8 @@ in a following deploy), so a code rollback alone is usually sufficient.
 - **`GET /readyz` on the ALB DNS name (`terraform output api_url`)** --
   501/503 means the API is up but can't reach Postgres; check RDS status
   and the `ecs_tasks` -> `rds` security group rule.
-- **CloudWatch Logs** -- `/ecs/rivet-staging/api`,
-  `/ecs/rivet-staging/worker`, `/ecs/rivet-staging/migrate`. Every line
+- **CloudWatch Logs** -- `/ecs/gava-staging/api`,
+  `/ecs/gava-staging/worker`, `/ecs/gava-staging/migrate`. Every line
   is JSON with a `request_id` field (Phase 11) -- grep for one to follow
   a specific request across log lines.
 - **ECS service events**: `aws ecs describe-services ...` includes an
@@ -143,7 +143,7 @@ in a following deploy), so a code rollback alone is usually sufficient.
   Stripe ones once you have one).
 - **Worker not processing jobs**: check the ElastiCache Redis cluster is
   reachable from the `worker` service's subnets, and that
-  `rivet_service.jobs.worker`'s process is actually the running command
+  `gava_service.jobs.worker`'s process is actually the running command
   (`aws ecs describe-tasks` -> `overrides.containerOverrides` or the
   task definition's own `command`).
 

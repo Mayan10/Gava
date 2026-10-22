@@ -15,10 +15,10 @@ from pathlib import Path
 
 import ezdxf
 
-from rivet.core.generator import generate
-from rivet.core.models import GenerationRequest, Orientation, PlotSpec, RoomRequirement, RoomType
-from rivet.export.dxf import export_dxf
-from rivet.export.dxf.sheet import LAYOUT_NAME
+from gava.core.generator import generate
+from gava.core.models import GenerationRequest, Orientation, PlotSpec, RoomRequirement, RoomType
+from gava.export.dxf import export_dxf
+from gava.export.dxf.sheet import LAYOUT_NAME
 
 # Mirrors tests/conftest.py::sample_request exactly.
 _REQUEST = GenerationRequest(

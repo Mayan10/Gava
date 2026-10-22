@@ -7,8 +7,8 @@ def _register_studio_org(client) -> None:
     that need a key-creation-capable org go straight to the DB, matching
     how a developer would do it manually before Phase 10's billing exists.
     """
-    from rivet_service.db.models import Organization
-    from rivet_service.db.session import SessionLocal
+    from gava_service.db.models import Organization
+    from gava_service.db.session import SessionLocal
 
     res = client.post("/api/v1/auth/register", json=VALID_REGISTER)
     org_id = res.json()["org"]["id"]

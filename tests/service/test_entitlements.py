@@ -8,13 +8,13 @@ from __future__ import annotations
 import uuid
 from datetime import timedelta
 
-from rivet_service.billing.entitlements import (
+from gava_service.billing.entitlements import (
     current_period_start,
     entitlements_for,
     generations_used_this_period,
 )
-from rivet_service.db.models import Organization, UsageEvent
-from rivet_service.db.session import SessionLocal
+from gava_service.db.models import Organization, UsageEvent
+from gava_service.db.session import SessionLocal
 
 VALID_REGISTER = {"email": "entitlements-test@example.com", "password": "hunter22222", "accept_tos": True}
 

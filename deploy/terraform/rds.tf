@@ -9,12 +9,12 @@ resource "random_password" "db" {
 }
 
 resource "aws_db_subnet_group" "main" {
-  name       = "rivet-${var.environment}"
+  name       = "gava-${var.environment}"
   subnet_ids = aws_subnet.private[*].id
 }
 
 resource "aws_db_instance" "main" {
-  identifier     = "rivet-${var.environment}"
+  identifier     = "gava-${var.environment}"
   engine         = "postgres"
   engine_version = "16"
 
@@ -24,8 +24,8 @@ resource "aws_db_instance" "main" {
   db_subnet_group_name  = aws_db_subnet_group.main.name
   vpc_security_group_ids = [aws_security_group.rds.id]
 
-  db_name  = "rivet"
-  username = "rivet"
+  db_name  = "gava"
+  username = "gava"
   password = random_password.db.result
 
   # citext (users.email -- see db/models/user.py) needs to already exist

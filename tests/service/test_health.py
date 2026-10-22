@@ -13,7 +13,7 @@ def test_readyz_reports_database_connectivity(client):
 
 
 def test_readyz_returns_503_when_database_unreachable(client, monkeypatch):
-    import rivet_service.main as main_module
+    import gava_service.main as main_module
 
     monkeypatch.setattr(main_module, "database_is_reachable", lambda: False)
     res = client.get("/readyz")

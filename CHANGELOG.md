@@ -3,6 +3,16 @@
 All notable changes to this project are documented in this file.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [Unreleased]
+
+### Changed
+
+- Project renamed from Rivet to Gavà. Python packages are now `gava` and
+  `gava_service`, the distribution is `gava-floorplan`, the CLI is `gava`,
+  and code identifiers, cookies, DXF block/dimstyle names and infrastructure
+  names use the ASCII form `gava` / `GAVA`. The GitHub repository moved to
+  `Mayan10/Gava`. Entries below keep the name the project had at the time.
+
 ## [0.1.0] - 2026-08-11
 
 ### Changed — complete rebuild

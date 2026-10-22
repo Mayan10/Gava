@@ -5,7 +5,7 @@
 ## Testing
 
 <!-- `pytest -q` and `ruff check packages apps tests` output, plus anything
-     specific to this change (e.g. a `rivet generate` command you ran
+     specific to this change (e.g. a `gava generate` command you ran
      to sanity-check a layout-engine change). -->
 
 - [ ] `pytest -q` passes

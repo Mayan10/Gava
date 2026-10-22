@@ -7,12 +7,12 @@ resource "aws_vpc" "main" {
   enable_dns_support   = true
   enable_dns_hostnames = true
 
-  tags = { Name = "rivet-${var.environment}" }
+  tags = { Name = "gava-${var.environment}" }
 }
 
 resource "aws_internet_gateway" "main" {
   vpc_id = aws_vpc.main.id
-  tags   = { Name = "rivet-${var.environment}" }
+  tags   = { Name = "gava-${var.environment}" }
 }
 
 # Public: the ALB and the single NAT gateway.
@@ -22,7 +22,7 @@ resource "aws_subnet" "public" {
   cidr_block              = cidrsubnet(var.vpc_cidr, 8, count.index)
   availability_zone       = data.aws_availability_zones.available.names[count.index]
   map_public_ip_on_launch = true
-  tags                    = { Name = "rivet-${var.environment}-public-${count.index}" }
+  tags                    = { Name = "gava-${var.environment}-public-${count.index}" }
 }
 
 # Private: ECS tasks, RDS, ElastiCache -- nothing in here gets a public IP.
@@ -31,12 +31,12 @@ resource "aws_subnet" "private" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = cidrsubnet(var.vpc_cidr, 8, count.index + var.az_count)
   availability_zone = data.aws_availability_zones.available.names[count.index]
-  tags              = { Name = "rivet-${var.environment}-private-${count.index}" }
+  tags              = { Name = "gava-${var.environment}-private-${count.index}" }
 }
 
 resource "aws_eip" "nat" {
   domain = "vpc"
-  tags   = { Name = "rivet-${var.environment}-nat" }
+  tags   = { Name = "gava-${var.environment}-nat" }
 }
 
 # One NAT gateway, not one per AZ -- a cost/availability tradeoff
@@ -48,7 +48,7 @@ resource "aws_eip" "nat" {
 resource "aws_nat_gateway" "main" {
   allocation_id = aws_eip.nat.id
   subnet_id     = aws_subnet.public[0].id
-  tags          = { Name = "rivet-${var.environment}" }
+  tags          = { Name = "gava-${var.environment}" }
   depends_on    = [aws_internet_gateway.main]
 }
 
@@ -58,7 +58,7 @@ resource "aws_route_table" "public" {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.main.id
   }
-  tags = { Name = "rivet-${var.environment}-public" }
+  tags = { Name = "gava-${var.environment}-public" }
 }
 
 resource "aws_route_table_association" "public" {
@@ -73,7 +73,7 @@ resource "aws_route_table" "private" {
     cidr_block     = "0.0.0.0/0"
     nat_gateway_id = aws_nat_gateway.main.id
   }
-  tags = { Name = "rivet-${var.environment}-private" }
+  tags = { Name = "gava-${var.environment}-private" }
 }
 
 resource "aws_route_table_association" "private" {

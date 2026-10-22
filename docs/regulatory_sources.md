@@ -97,7 +97,7 @@ for exact breakpoints — Rule 35(1)(c)(B)(i)–(v)).
 
 Notes worth preserving in code comments:
 - Rule 52(5)(b): "Pooja room, or store room shall not be taken as a habitable room" — explicit exclusion, relevant to which `RoomType`s Phase 1's validator should treat as habitable.
-- Rule 52(7)(c)(vi): "the door of the water closet or bath not to be directly opened to a kitchen" — this is a real code citation for the `ADJACENCY_AVOID` pair Rivet already has between `BATHROOM`/`TOILET` and `KITCHEN` (currently uncited in `core/rules.py`). Promote this one to hard in the validator, not just a soft scoring penalty, since it's citable.
+- Rule 52(7)(c)(vi): "the door of the water closet or bath not to be directly opened to a kitchen" — this is a real code citation for the `ADJACENCY_AVOID` pair Gavà already has between `BATHROOM`/`TOILET` and `KITCHEN` (currently uncited in `core/rules.py`). Promote this one to hard in the validator, not just a soft scoring penalty, since it's citable.
 
 ## Ventilation — Rule 52(16) (relevant to Phase 2's metrics, not just Phase 1)
 
@@ -110,7 +110,7 @@ Notes worth preserving in code comments:
 1. **Door widths.** Not specified in TNCDBR's general residential
    provisions. The only door widths found (900mm clear opening) are under
    Rule 43 (differently-abled accessibility), not general dwelling doors.
-   Rivet's current placeholders (main 1.0m, internal 0.9m, bath 0.75m) in
+   Gavà's current placeholders (main 1.0m, internal 0.9m, bath 0.75m) in
    `core/rules.py::DOOR_WIDTH_*` need either an NBC 2016 citation or a
    deliberately-chosen practice value before Phase 1 promotes them to hard
    constraints.

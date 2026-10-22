@@ -2,7 +2,7 @@
 # through the API's own presigned-URL flow (section 6), never a public
 # bucket URL.
 resource "aws_s3_bucket" "artifacts" {
-  bucket = "rivet-artifacts-${var.environment}"
+  bucket = "gava-artifacts-${var.environment}"
 }
 
 resource "aws_s3_bucket_public_access_block" "artifacts" {

@@ -16,9 +16,9 @@ from unittest.mock import patch
 
 import stripe
 
-from rivet_service.config import get_settings
-from rivet_service.db.models import Organization, Plan, Subscription
-from rivet_service.db.session import SessionLocal
+from gava_service.config import get_settings
+from gava_service.db.models import Organization, Plan, Subscription
+from gava_service.db.session import SessionLocal
 
 VALID_REGISTER = {"email": "billing-test@example.com", "password": "hunter22222"}
 
@@ -233,7 +233,7 @@ def test_webhook_unknown_price_leaves_no_trace(client):
 
     db = SessionLocal()
     try:
-        from rivet_service.db.models import BillingEvent
+        from gava_service.db.models import BillingEvent
 
         assert db.query(BillingEvent).filter_by(provider_event_id="evt_unknown_price").first() is None
     finally:
@@ -277,7 +277,7 @@ def test_checkout_session_returns_url_and_persists_customer_id(client):
     _set_price("pro", "price_test_pro")
 
     fake_session = type("FakeSession", (), {"url": "https://checkout.stripe.com/test", "customer": "cus_new_1"})()
-    with patch("rivet_service.api.v1.billing.create_checkout_session", return_value=fake_session) as mocked:
+    with patch("gava_service.api.v1.billing.create_checkout_session", return_value=fake_session) as mocked:
         res = client.post("/api/v1/billing/checkout-session", json={"plan_code": "pro"})
 
     assert res.status_code == 200
@@ -308,7 +308,7 @@ def test_portal_session_returns_url(client):
         db.close()
 
     fake_session = type("FakeSession", (), {"url": "https://billing.stripe.com/test"})()
-    with patch("rivet_service.api.v1.billing.create_portal_session", return_value=fake_session):
+    with patch("gava_service.api.v1.billing.create_portal_session", return_value=fake_session):
         res = client.post("/api/v1/billing/portal-session")
 
     assert res.status_code == 200

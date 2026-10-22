@@ -3,7 +3,7 @@
 # than scattered across alb.tf/ecs.tf/rds.tf/elasticache.tf.
 
 resource "aws_security_group" "alb" {
-  name_prefix = "rivet-${var.environment}-alb-"
+  name_prefix = "gava-${var.environment}-alb-"
   vpc_id      = aws_vpc.main.id
 
   ingress {
@@ -36,7 +36,7 @@ resource "aws_security_group" "alb" {
 }
 
 resource "aws_security_group" "ecs_tasks" {
-  name_prefix = "rivet-${var.environment}-ecs-"
+  name_prefix = "gava-${var.environment}-ecs-"
   vpc_id      = aws_vpc.main.id
 
   ingress {
@@ -59,7 +59,7 @@ resource "aws_security_group" "ecs_tasks" {
 }
 
 resource "aws_security_group" "rds" {
-  name_prefix = "rivet-${var.environment}-rds-"
+  name_prefix = "gava-${var.environment}-rds-"
   vpc_id      = aws_vpc.main.id
 
   ingress {
@@ -81,7 +81,7 @@ resource "aws_security_group" "rds" {
 }
 
 resource "aws_security_group" "redis" {
-  name_prefix = "rivet-${var.environment}-redis-"
+  name_prefix = "gava-${var.environment}-redis-"
   vpc_id      = aws_vpc.main.id
 
   ingress {

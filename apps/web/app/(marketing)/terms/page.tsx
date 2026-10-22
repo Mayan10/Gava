@@ -22,12 +22,12 @@ export default function TermsPage() {
       <Prose className="mt-10">
         <h2>Acceptance</h2>
         <p>
-          By creating an account or using Rivet, you agree to these terms. If
+          By creating an account or using Gavà, you agree to these terms. If
           you do not agree, do not use the service.
         </p>
         <h2>The service</h2>
         <p>
-          Rivet generates residential floor plans from a room program. Plans are
+          Gavà generates residential floor plans from a room program. Plans are
           produced by an automated engine and are provided for design assistance
           only. They are not a substitute for review by a licensed architect or
           engineer, and you are responsible for verifying any output against the

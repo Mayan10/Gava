@@ -4,7 +4,7 @@ output "api_url" {
 }
 
 output "ecr_repository_url" {
-  value = aws_ecr_repository.rivet_service.repository_url
+  value = aws_ecr_repository.gava_service.repository_url
 }
 
 output "ecs_cluster_name" {

@@ -1,5 +1,5 @@
 {
-  "name": "rivet-monorepo",
+  "name": "gava-monorepo",
   "version": "0.1.0",
   "private": true,
   "workspaces": ["apps/*"],

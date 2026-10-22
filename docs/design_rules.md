@@ -1,7 +1,7 @@
 # Design rules
 
-This is the human-readable version of [`packages/engine/rivet/core/rules.py`](../packages/engine/rivet/core/rules.py)
-and [`packages/engine/rivet/core/validator.py`](../packages/engine/rivet/core/validator.py), which
+This is the human-readable version of [`packages/engine/gava/core/rules.py`](../packages/engine/gava/core/rules.py)
+and [`packages/engine/gava/core/validator.py`](../packages/engine/gava/core/validator.py), which
 are the single source of truth — if this document and the code disagree,
 the code is right and this file needs an update. Raw source extraction
 (page numbers, full clause text) lives in
@@ -124,7 +124,7 @@ downstream consumers compute metrics against the right one.
   informational, not a hard check.
 - **FSI cap = 2.0** (Rule 35(1)(a)/(b), row D — both the ≤16-dwelling and
   >16-dwelling "Other areas" tables cite the same figure for the
-  residential case Rivet generates). `core/rules.py::fsi_permitted()`
+  residential case Gavà generates). `core/rules.py::fsi_permitted()`
   returns `None` for the `GENERIC` ruleset, which has no cited cap.
 
 **Uncited assumptions** (`core/rules.py`, all explicitly flagged as
@@ -145,7 +145,7 @@ numbers, not synonyms:
 - *Built-up area*: the buildable rect (bounded at the external wall
   *centerline*) expanded outward by half the external wall thickness on
   every side — area within the *outer face* of the external wall.
-- *Plinth area*: currently equal to built-up area. Rivet doesn't model
+- *Plinth area*: currently equal to built-up area. Gavà doesn't model
   verandahs/porches (plinth-only projections beyond the building line)
   yet, so there's nothing to add on top of built-up — not an
   approximation so much as "nothing else exists in scope."
@@ -287,11 +287,11 @@ sides — see below):
 
 Simplification: TNCDBR's table permits a single-side-only setback for some
 height/plot-width combinations (leaving the other side at zero, e.g. for a
-party wall). Rivet always applies the setback symmetrically on both
+party wall). Gavà always applies the setback symmetrically on both
 sides — never less space than the code requires, only possibly more
 conservative than strictly necessary. Heights above 18.30m fall outside
 TNCDBR's Non-High-Rise Rule 35 entirely (High Rise rules aren't
-implemented); Rivet clamps to the 16–18.30m tier rather than erroring.
+implemented); Gavà clamps to the 16–18.30m tier rather than erroring.
 
 **GENERIC ruleset**: falls back to the original uncited plot-area-tiered
 heuristic (≤150/300/500 m² → 1.5/3.0/4.5/6.0 m front, etc.) — see

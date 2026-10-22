@@ -26,13 +26,13 @@ import tempfile
 
 import pytest
 
-os.environ.setdefault("DATABASE_URL", "postgresql+psycopg://mayan@localhost:5432/rivet_test")
+os.environ.setdefault("DATABASE_URL", "postgresql+psycopg://mayan@localhost:5432/gava_test")
 # A distinct DB index from the dev default (.../0) so `pytest -q` never
 # shares queue state with a developer's own `docker compose up` / local
 # worker.
 os.environ.setdefault("REDIS_URL", "redis://localhost:6379/15")
 
-_TEST_STORAGE_DIR = tempfile.mkdtemp(prefix="rivet-test-storage-")
+_TEST_STORAGE_DIR = tempfile.mkdtemp(prefix="gava-test-storage-")
 os.environ.setdefault("STORAGE_LOCAL_DIR", _TEST_STORAGE_DIR)
 
 # Phase 10: fake but well-formed test-mode-shaped values -- no real
@@ -46,11 +46,11 @@ os.environ.setdefault("STRIPE_WEBHOOK_SECRET", "whsec_test_fake_for_tests")
 try:
     from fastapi.testclient import TestClient
 
-    from rivet_service.db.session import database_is_reachable
-    from rivet_service.main import create_app
+    from gava_service.db.session import database_is_reachable
+    from gava_service.main import create_app
 except ImportError:
     pytest.skip(
-        "rivet_service dependencies not installed -- run `pip install -e \".[service]\"` "
+        "gava_service dependencies not installed -- run `pip install -e \".[service]\"` "
         "to include tests/service in the run.",
         allow_module_level=True,
     )
@@ -83,7 +83,7 @@ def _clean_service_state():
     -- routes commit their own sessions), so wipe them before every test
     rather than relying on unique-per-test data to avoid collisions.
     """
-    from rivet_service.db.session import SessionLocal
+    from gava_service.db.session import SessionLocal
 
     db = SessionLocal()
     try:
@@ -94,7 +94,7 @@ def _clean_service_state():
         db.close()
 
     with contextlib.suppress(Exception):  # Redis may simply not be running; jobs-touching tests skip themselves
-        from rivet_service.jobs.queue import get_redis_connection
+        from gava_service.jobs.queue import get_redis_connection
 
         get_redis_connection().flushdb()
 
@@ -110,7 +110,7 @@ class _AutoCsrfTestClient(TestClient):
     should bypass. But ~90 pre-existing call sites across this suite
     predate it and were never written to attach the header. Rather than
     hand-edit every one, this auto-attaches ``X-CSRF-Token`` from the
-    ``rivet_csrf`` cookie (set by register/login) whenever the caller
+    ``gava_csrf`` cookie (set by register/login) whenever the caller
     hasn't already set that header -- the real production check still
     runs on every request, comparing a real cookie against a real header,
     it's just populated automatically here instead of by hand.
@@ -120,8 +120,8 @@ class _AutoCsrfTestClient(TestClient):
 
     def request(self, method, url, *, headers=None, **kwargs):
         headers = dict(headers or {})
-        if not any(k.lower() == "x-csrf-token" for k in headers) and "rivet_csrf" in self.cookies:
-            headers["X-CSRF-Token"] = self.cookies["rivet_csrf"]
+        if not any(k.lower() == "x-csrf-token" for k in headers) and "gava_csrf" in self.cookies:
+            headers["X-CSRF-Token"] = self.cookies["gava_csrf"]
         return super().request(method, url, headers=headers, **kwargs)
 
 
@@ -139,7 +139,7 @@ def override_settings(monkeypatch):
     defaults instead of inheriting this test's cached Settings object --
     get_settings() is process-wide, not per-test.
     """
-    from rivet_service.config import get_settings
+    from gava_service.config import get_settings
 
     def _apply(**env_vars) -> None:
         for key, value in env_vars.items():
@@ -152,7 +152,7 @@ def override_settings(monkeypatch):
 
 def redis_is_reachable() -> bool:
     try:
-        from rivet_service.jobs.queue import get_redis_connection
+        from gava_service.jobs.queue import get_redis_connection
 
         get_redis_connection().ping()
         return True

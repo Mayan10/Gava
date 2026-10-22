@@ -15,7 +15,7 @@ if not redis_is_reachable():
 
 from rq import SimpleWorker
 
-from rivet_service.jobs.queue import get_queue, get_redis_connection
+from gava_service.jobs.queue import get_queue, get_redis_connection
 
 VALID_REGISTER = {"email": "generations-test@example.com", "password": "hunter22222"}
 
@@ -49,8 +49,8 @@ def _create_project(client, *, email: str = VALID_REGISTER["email"]) -> str:
     # export. A free-tier org would clamp/gate those and turn every one
     # of these into an entitlements test instead of what it's actually
     # testing -- entitlements get their own dedicated tests below.
-    from rivet_service.db.models import Organization
-    from rivet_service.db.session import SessionLocal
+    from gava_service.db.models import Organization
+    from gava_service.db.session import SessionLocal
 
     res = client.post("/api/v1/auth/register", json={"email": email, "password": "hunter22222", "accept_tos": True})
     org_id = res.json()["org"]["id"]

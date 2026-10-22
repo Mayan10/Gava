@@ -34,8 +34,8 @@ def test_csrf_not_required_for_api_key_auth(client):
 
     import uuid
 
-    from rivet_service.db.models import Organization
-    from rivet_service.db.session import SessionLocal
+    from gava_service.db.models import Organization
+    from gava_service.db.session import SessionLocal
 
     db = SessionLocal()
     try:

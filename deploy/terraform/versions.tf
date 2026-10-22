@@ -28,10 +28,10 @@ terraform {
   # `terraform init` -- see docs/runbook.md. Bucket/table names are
   # placeholders; replace them for your own AWS account.
   backend "s3" {
-    bucket         = "rivet-terraform-state"
+    bucket         = "gava-terraform-state"
     key            = "staging/terraform.tfstate"
     region         = "us-east-1"
-    dynamodb_table = "rivet-terraform-locks"
+    dynamodb_table = "gava-terraform-locks"
     encrypt        = true
   }
 }
@@ -41,7 +41,7 @@ provider "aws" {
 
   default_tags {
     tags = {
-      Project     = "rivet"
+      Project     = "gava"
       Environment = var.environment
       ManagedBy   = "terraform"
     }

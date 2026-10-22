@@ -33,7 +33,7 @@ const STEPS = [
   {
     n: "01",
     title: "Describe the program",
-    body: "Give Rivet the plot dimensions and the rooms you need — areas, counts, a few adjacencies. No modelling, no drawing.",
+    body: "Give Gavà the plot dimensions and the rooms you need — areas, counts, a few adjacencies. No modelling, no drawing.",
   },
   {
     n: "02",
@@ -61,7 +61,7 @@ export default function LandingPage() {
               <span className="text-clay">building code</span>.
             </h1>
             <p className="mt-6 max-w-xl text-lg text-muted-foreground">
-              Rivet turns a room program into ranked, code-compliant
+              Gavà turns a room program into ranked, code-compliant
               residential layouts — searched, validated, rendered, and exported
               to DXF. From brief to buildable in seconds.
             </p>
@@ -97,7 +97,7 @@ export default function LandingPage() {
       <section id="features" className="border-t border-border/70 py-20 sm:py-28">
         <Container>
           <div className="max-w-2xl">
-            <p className="eyebrow">Why Rivet</p>
+            <p className="eyebrow">Why Gavà</p>
             <h2 className="mt-4 text-balance font-display text-3xl font-semibold tracking-tight sm:text-4xl">
               An engine that knows the difference between a rule and a
               preference.

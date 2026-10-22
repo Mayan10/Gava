@@ -1,6 +1,6 @@
 import pytest
 
-from rivet.core.models import (
+from gava.core.models import (
     GenerationRequest,
     InfeasibleResult,
     Layout,

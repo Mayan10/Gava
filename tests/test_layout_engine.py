@@ -3,8 +3,8 @@ import itertools
 import pytest
 
 from conftest import assert_feasible
-from rivet.core.generator import generate
-from rivet.core.models import (
+from gava.core.generator import generate
+from gava.core.models import (
     GenerationRequest,
     InfeasibleResult,
     Orientation,
@@ -111,9 +111,9 @@ def test_tight_plot_geometry_is_still_valid_even_though_infeasible():
     # unconditional and doesn't depend on whether the result passes
     # validation. Exercise it directly via the same search path generate()
     # uses internally.
-    from rivet.core.generator import compute_buildable_rect
-    from rivet.core.graph import build_adjacency_graph, expand_room_requirements
-    from rivet.core.layout_engine import search_layouts
+    from gava.core.generator import compute_buildable_rect
+    from gava.core.graph import build_adjacency_graph, expand_room_requirements
+    from gava.core.layout_engine import search_layouts
 
     request = GenerationRequest(
         plot=PlotSpec(width_m=8.0, length_m=10.0, entrance=Orientation.SOUTH),

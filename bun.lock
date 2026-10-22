@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "rivet-monorepo",
+      "name": "gava-monorepo",
       "devDependencies": {
         "mprocs": "^0.7.1",
       },

@@ -1,5 +1,5 @@
 resource "aws_lb" "api" {
-  name               = "rivet-${var.environment}"
+  name               = "gava-${var.environment}"
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.alb.id]
@@ -7,7 +7,7 @@ resource "aws_lb" "api" {
 }
 
 resource "aws_lb_target_group" "api" {
-  name        = "rivet-${var.environment}-api"
+  name        = "gava-${var.environment}-api"
   port        = 8000
   protocol    = "HTTP"
   vpc_id      = aws_vpc.main.id

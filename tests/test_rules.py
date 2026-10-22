@@ -1,7 +1,7 @@
 import pytest
 
-from rivet.core.models import RoomType, Ruleset
-from rivet.core.rules import (
+from gava.core.models import RoomType, Ruleset
+from gava.core.rules import (
     ROOM_RULES,
     door_width_for,
     is_avoided_adjacency,

@@ -8,7 +8,7 @@ const schema = {
     {
       "@type": "Organization",
       "@id": `${siteUrl}#organization`,
-      name: "Rivet",
+      name: "Gavà",
       url: siteUrl,
       description: "A generative floor plan engine.",
     },
@@ -16,12 +16,12 @@ const schema = {
       "@type": "WebSite",
       "@id": `${siteUrl}#website`,
       url: siteUrl,
-      name: "Rivet",
+      name: "Gavà",
       publisher: { "@id": `${siteUrl}#organization` },
     },
     {
       "@type": "SoftwareApplication",
-      name: "Rivet",
+      name: "Gavà",
       applicationCategory: "DesignApplication",
       operatingSystem: "Web",
       description:

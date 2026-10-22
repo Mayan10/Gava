@@ -1,5 +1,5 @@
-resource "aws_ecr_repository" "rivet_service" {
-  name                 = "rivet-service"
+resource "aws_ecr_repository" "gava_service" {
+  name                 = "gava-service"
   image_tag_mutability = "IMMUTABLE" # a given tag (e.g. a git sha) always refers to the same build
 
   image_scanning_configuration {
@@ -7,8 +7,8 @@ resource "aws_ecr_repository" "rivet_service" {
   }
 }
 
-resource "aws_ecr_lifecycle_policy" "rivet_service" {
-  repository = aws_ecr_repository.rivet_service.name
+resource "aws_ecr_lifecycle_policy" "gava_service" {
+  repository = aws_ecr_repository.gava_service.name
   policy = jsonencode({
     rules = [{
       rulePriority = 1

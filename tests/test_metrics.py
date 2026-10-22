@@ -1,9 +1,9 @@
 import pytest
 
 from conftest import assert_feasible
-from rivet.core.generator import compute_buildable_rect, generate
-from rivet.core.metrics import compute_metrics
-from rivet.core.models import (
+from gava.core.generator import compute_buildable_rect, generate
+from gava.core.metrics import compute_metrics
+from gava.core.models import (
     GenerationRequest,
     Layout,
     Orientation,
@@ -14,8 +14,8 @@ from rivet.core.models import (
     RoomType,
     Ruleset,
 )
-from rivet.core.rules import TNCDBR_MAX_FSI, WALL_THICKNESS_EXTERNAL_M, WALL_THICKNESS_INTERNAL_M
-from rivet.core.walls import compute_wall_segments, total_wall_length_by_class
+from gava.core.rules import TNCDBR_MAX_FSI, WALL_THICKNESS_EXTERNAL_M, WALL_THICKNESS_INTERNAL_M
+from gava.core.walls import compute_wall_segments, total_wall_length_by_class
 
 
 def _single_room_layout():
@@ -172,7 +172,7 @@ def test_ventilation_does_not_affect_validator_hard_check(sample_request):
     # ventilation ratio must never change whether generate() considers a
     # request feasible -- core/validator.py keeps the Phase 1
     # has-exterior-wall proxy as its actual hard check.
-    from rivet.core.validator import validate_layout
+    from gava.core.validator import validate_layout
 
     layouts = assert_feasible(generate(sample_request))
     layout = layouts[0]
@@ -195,9 +195,9 @@ def test_renderers_exporter_and_api_report_identical_gross_area(sample_request):
     # they all read core.metrics.compute_metrics -- assert that's actually
     # true by checking the same formatted figure appears everywhere,
     # rather than just trusting the refactor.
-    from rivet.api.schemas import layout_to_dict
-    from rivet.export.dxf import build_document
-    from rivet.render.svg import render_svg
+    from gava.api.schemas import layout_to_dict
+    from gava.export.dxf import build_document
+    from gava.render.svg import render_svg
 
     layouts = assert_feasible(generate(sample_request))
     layout = layouts[0]
